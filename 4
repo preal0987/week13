@@ -1,0 +1,39 @@
+clear; clc;
+
+orders = poissrnd(180, 365, 1);
+
+totalTime = zeros(365, 1);
+
+for i = 1:365
+    processTime = 6 + 2*randn(orders(i), 1);
+    processTime(processTime < 0) = 0;
+    totalTime(i) = sum(processTime);
+end
+
+overRatio = sum(totalTime > 1200) / 365;
+disp('Over 1200 min Ratio =');
+disp(overRatio);
+
+figure;
+
+subplot(2,1,1);
+plot(orders);
+xlabel('Day');
+ylabel('Number of Orders');
+title('Daily Number of Orders');
+grid on;
+
+subplot(2,1,2);
+plot(totalTime);
+xlabel('Day');
+ylabel('Total Processing Time');
+title('Daily Total Processing Time');
+grid on;
+
+figure;
+
+scatter(orders, totalTime);
+xlabel('Number of Orders');
+ylabel('Total Processing Time');
+title('Orders vs Total Processing Time');
+grid on;
