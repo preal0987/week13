@@ -1,0 +1,27 @@
+clear; clc;
+rng(1);
+
+n = 100000;
+
+p = [0.72 0.81 0.67 0.90 0.76];
+
+R = rand(n, 5);
+
+detect = R < p;
+
+numDetect = sum(detect, 2);
+
+success = numDetect >= 3;
+
+detectProb = sum(success) / n;
+
+disp('Estimated system detection probability =');
+disp(detectProb);
+
+figure;
+histogram(numDetect, 0:6);
+xlabel('Number of Detected Modules');
+ylabel('Frequency');
+title('Histogram of Detected Module Count');
+grid on;
+
