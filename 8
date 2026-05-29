@@ -1,0 +1,36 @@
+clear; clc;
+rng(1);
+
+n = 50000;
+
+p1 = 0.94;
+p2 = 0.91;
+p3 = 0.88;
+
+pass1 = rand(n, 1) < p1;
+
+pass2 = false(n, 1);
+pass2(pass1) = rand(sum(pass1), 1) < p2;
+
+pass3 = false(n, 1);
+pass3(pass2) = rand(sum(pass2), 1) < p3;
+
+finalPass = pass3;
+finalRate = sum(finalPass) / n;
+
+disp('Final pass rate =');
+disp(finalRate);
+
+fail1 = sum(~pass1);
+fail2 = sum(pass1 & ~pass2);
+fail3 = sum(pass2 & ~pass3);
+finalPassCount = sum(finalPass);
+
+counts = [fail1 fail2 fail3 finalPassCount];
+
+figure;
+bar(counts);
+xticklabels({'Fail Stage 1', 'Fail Stage 2', 'Fail Stage 3', 'Final Pass'});
+ylabel('Number of Products');
+title('Inspection Result by Stage');
+grid on;
