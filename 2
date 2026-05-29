@@ -1,0 +1,25 @@
+clear; clc;
+
+weight = 100 + 4*randn(10000, 20);
+
+avgWeight = mean(weight, 2);
+
+fail = (avgWeight < 98) | (avgWeight > 102);
+
+failRatio = sum(fail) / 10000;
+disp('Fail Ratio =');
+disp(failRatio);
+
+figure;
+
+histogram(avgWeight);
+
+xlabel('Average Weight');
+ylabel('Number of Boxes');
+title('Histogram of Box Average Weight');
+
+grid on;
+hold on;
+
+xline(98, 'r', 'LineWidth', 2);
+xline(102, 'r', 'LineWidth', 2);
