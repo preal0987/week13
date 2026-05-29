@@ -1,0 +1,24 @@
+clear; clc;
+
+N = randn(100000, 1);
+
+S = 1.8 + N;
+
+detect = S >= 1.2;
+
+successRate = sum(detect) / 100000;
+disp('Detection Success Rate =');
+disp(successRate);
+
+figure;
+
+histogram(S);
+
+xlabel('Received Signal');
+ylabel('Count');
+title('Histogram of Received Signal');
+
+grid on;
+hold on;
+
+xline(1.2, 'r', 'LineWidth', 2);
