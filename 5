@@ -1,0 +1,36 @@
+clear; clc;
+
+r = 0.0008 + 0.015*randn(5000, 60);
+
+asset = zeros(5000, 60);
+asset(:,1) = 100 * (1 + r(:,1));
+
+for day = 2:60
+    asset(:,day) = asset(:,day-1) .* (1 + r(:,day));
+end
+
+finalAsset = asset(:,60);
+meanFinal = mean(finalAsset);
+minFinal = min(finalAsset);
+maxFinal = max(finalAsset);
+
+disp('Mean Final Asset =');
+disp(meanFinal);
+disp('Minimum Final Asset =');
+disp(minFinal);
+disp('Maximum Final Asset =');
+disp(maxFinal);
+
+probLoss = sum(finalAsset < 100) / 5000;
+disp('Probability Final Asset < 100 =');
+disp(probLoss);
+
+idx = randperm(5000, 30);
+
+figure;
+plot(asset(idx,:)');
+
+xlabel('Day');
+ylabel('Asset Value');
+title('30 Simulated Asset Paths');
+grid on;
