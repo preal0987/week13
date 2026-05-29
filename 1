@@ -1,0 +1,27 @@
+clear; clc;
+
+rng(13);
+
+p = 0.35 + (0.95 - 0.35) * rand(1, 40);
+
+result = rand(5000, 40) < p;
+
+totalScore = sum(result, 2);
+avgScore = mean(totalScore);
+stdScore = std(totalScore);
+
+figure;
+histogram(totalScore);
+xlabel('Score');
+ylabel('Number of Students');
+title('Histogram of Exam Scores');
+grid on;
+
+ratioAboveMean = sum(totalScore > avgScore) / 5000;
+
+disp('Average Score =');
+disp(avgScore);
+disp('Standard Deviation =');
+disp(stdScore);
+disp('Ratio Above Mean =');
+disp(ratioAboveMean);
