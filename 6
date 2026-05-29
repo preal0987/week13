@@ -1,0 +1,42 @@
+clear; clc;
+rng(1);
+
+n = 300;
+
+arrivalInterval = exprnd(8, n, 1);
+arrivalTime = cumsum(arrivalInterval);
+
+serviceTime = normrnd(10, 3, n, 1);
+
+serviceTime(serviceTime < 1) = 1;
+
+startTime = zeros(n, 1);
+endTime = zeros(n, 1);
+
+startTime(1) = arrivalTime(1);
+endTime(1) = startTime(1) + serviceTime(1);
+
+for i = 2:n
+    startTime(i) = max(arrivalTime(i), endTime(i-1));
+    endTime(i) = startTime(i) + serviceTime(i);
+end
+
+waitTime = startTime - arrivalTime;
+
+meanWait = mean(waitTime);
+maxWait = max(waitTime);
+probOver20 = sum(waitTime > 20) / n;
+
+disp('Average waiting time =');
+disp(meanWait);
+disp('Maximum waiting time =');
+disp(maxWait);
+disp('Proportion waiting time > 20 min =');
+disp(probOver20);
+
+figure;
+histogram(waitTime);
+xlabel('Waiting Time (min)');
+ylabel('Number of Patients');
+title('Histogram of Waiting Time');
+grid on;
